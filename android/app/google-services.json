@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "719000709981",
+    "project_id": "bird-100de",
+    "storage_bucket": "bird-100de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:719000709981:android:a7b021ccadac7000f596b4",
+        "android_client_info": {
+          "package_name": "com.example.bird"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "719000709981-lb8cl7fhd7ogoq0spvq18349ha4tjoqb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOb2GgoyMl3s6BUjoehQ1GKG_PjFG9OCE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "719000709981-lb8cl7fhd7ogoq0spvq18349ha4tjoqb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
