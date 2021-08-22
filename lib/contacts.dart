@@ -7,25 +7,27 @@ class Contacts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-      ),
-      drawer: Drawer(
-        child: Column(
-          children: [
-            TextButton.icon(
-              label: Text('logout'),
-              onPressed: () async {
-                await _auth.signOut();
-              },
-              icon: Icon(Icons.logout),
-            )
-          ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.red,
         ),
-      ),
-      body: Center(
-        child: Text('Hi'),
+        drawer: Drawer(
+          child: Column(
+            children: [
+              TextButton.icon(
+                label: Text('logout'),
+                onPressed: () async {
+                  await _auth.signOut();
+                },
+                icon: Icon(Icons.logout),
+              )
+            ],
+          ),
+        ),
+        body: Center(
+          child: Text('Hi'),
+        ),
       ),
     );
   }

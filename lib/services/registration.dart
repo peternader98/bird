@@ -1,3 +1,4 @@
+import 'package:bird/services/log-in.dart';
 import 'package:flutter/material.dart';
 import 'package:bird/services/auth.dart';
 
@@ -17,28 +18,41 @@ class _RegistrationState extends State<Registration> {
 
   String error = '';
 
+  register() async {
+    if (_formKey.currentState!.validate()) {
+      dynamic result = await _auth.register(email.text, password.text);
+      if (result == null)
+        setState(() {
+          error = 'Email is not valid';
+        });
+      else
+        Navigator.pop(context,
+          MaterialPageRoute(builder: (context) {
+            return Login();
+          })
+        );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.red.shade700,
-        title: Text(
-          'register',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 20.0,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.red.shade700,
+          title: Text(
+            'register',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 20.0,
+            ),
           ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Card(
-          elevation: 10.0,
-          color: Colors.red.shade700,
-          margin: EdgeInsets.symmetric(vertical: 150.0, horizontal: 20.0),
+        body: Center(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Form(
@@ -80,14 +94,14 @@ class _RegistrationState extends State<Registration> {
                     validator: (value) =>
                         value!.isEmpty ? 'enter an email' : null,
                     controller: email,
-                    cursorColor: Colors.white,
+                    cursorColor: Colors.red,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       hintText: 'Email',
                     ),
                     textDirection: TextDirection.ltr,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.red,
                     ),
                   ),
                   SizedBox(
@@ -99,14 +113,14 @@ class _RegistrationState extends State<Registration> {
                         : null,
                     obscureText: true,
                     controller: password,
-                    cursorColor: Colors.white,
+                    cursorColor: Colors.red,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       hintText: 'Password',
                     ),
                     textDirection: TextDirection.ltr,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.red,
                     ),
                   ),
                   SizedBox(
@@ -118,13 +132,13 @@ class _RegistrationState extends State<Registration> {
                       'Registration',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.red.shade700,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 16.0,
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
+                      primary: Colors.red.shade700,
                       elevation: 5,
                     ),
                   ),
@@ -133,7 +147,7 @@ class _RegistrationState extends State<Registration> {
                   ),
                   Text(
                     error,
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.red),
                   ),
                 ],
               ),
@@ -142,15 +156,5 @@ class _RegistrationState extends State<Registration> {
         ),
       ),
     );
-  }
-
-  register() async {
-    if (_formKey.currentState!.validate()) {
-      dynamic result = await _auth.register(email.text, password.text);
-      if (result == null)
-        setState(() {
-          error = 'Email is not valid';
-        });
-    }
   }
 }

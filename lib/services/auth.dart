@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-//import 'package:bird/models/user.dart';
-
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -10,10 +8,9 @@ class AuthService {
   // sign in anon
 
   // sign in with Email & password
-  Future signIn(String email, String password) async {
+  Future<User?> signIn(String email, String password) async {
     try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(email: email, password: password);
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -25,10 +22,9 @@ class AuthService {
   }
 
   // register in with Email & password
-  Future register(String email, String password) async {
+  Future<User?> register(String email, String password) async {
     try {
-      UserCredential userCredential = await _auth
-          .createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -42,7 +38,7 @@ class AuthService {
   }
 
   // sign out
-  Future signOut() async {
+  Future<void> signOut() async {
     try {
       await _auth.signOut();
     } catch (e) {

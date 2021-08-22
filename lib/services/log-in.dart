@@ -1,3 +1,4 @@
+import 'package:bird/contacts.dart';
 import 'package:bird/services/auth.dart';
 import 'package:bird/services/registration.dart';
 import 'package:flutter/material.dart';
@@ -16,28 +17,55 @@ class _LoginState extends State<Login> {
 
   String error = '';
 
+  login() async {
+    if (_formKey.currentState!.validate()) {
+      dynamic result = await _auth.signIn(email.text, password.text);
+      if (result == null)
+        setState(() {
+          error = 'Email or password is incorrect';
+        });
+      else
+        Navigator.push(context,
+          MaterialPageRoute(builder: (context) {
+            return Contacts();
+          })
+        );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.red.shade700,
-        title: Text(
-          'log in',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 20.0,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.red.shade700,
+          title: Text(
+            'log in',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 20.0,
+            ),
           ),
+          centerTitle: true,
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) {
+                      return Registration();
+                    }));
+              },
+              child: Text('sign up'),
+              style: TextButton.styleFrom(
+                primary: Colors.white,
+              ),
+            ),
+          ],
         ),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Card(
-          elevation: 10.0,
-          color: Colors.red.shade700,
-          margin: EdgeInsets.symmetric(vertical: 150.0, horizontal: 20.0),
+        body: Center(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Form(
@@ -49,14 +77,14 @@ class _LoginState extends State<Login> {
                     validator: (value) =>
                         value!.isEmpty ? 'enter an email' : null,
                     controller: email,
-                    cursorColor: Colors.white,
+                    cursorColor: Colors.red.shade700,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       hintText: 'Email',
                     ),
                     textDirection: TextDirection.ltr,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.red.shade700,
                     ),
                   ),
                   SizedBox(
@@ -68,14 +96,14 @@ class _LoginState extends State<Login> {
                         : null,
                     controller: password,
                     obscureText: true,
-                    cursorColor: Colors.white,
+                    cursorColor: Colors.red.shade700,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       hintText: 'Password',
                     ),
                     textDirection: TextDirection.ltr,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.red.shade700,
                     ),
                   ),
                   SizedBox(
@@ -87,29 +115,14 @@ class _LoginState extends State<Login> {
                       'log in',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.red.shade700,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 16.0,
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
+                      primary: Colors.red.shade700,
                       elevation: 5,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Registration();
-                      }));
-                    },
-                    child: Text('sign up'),
-                    style: TextButton.styleFrom(
-                      primary: Colors.white,
                     ),
                   ),
                   SizedBox(
@@ -117,7 +130,7 @@ class _LoginState extends State<Login> {
                   ),
                   Text(
                     error,
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.red.shade700),
                   ),
                 ],
               ),
@@ -126,15 +139,5 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
-  }
-
-  login() async {
-    if (_formKey.currentState!.validate()) {
-      dynamic result = await _auth.signIn(email.text, password.text);
-      if (result == null)
-        setState(() {
-          error = 'Email or password is incorrect';
-        });
-    }
   }
 }
